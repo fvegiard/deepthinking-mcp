@@ -6,18 +6,13 @@ import { randomUUID, createHash } from 'crypto';
 import { z } from 'zod';
 import * as fs3 from 'fs';
 import { readFileSync, promises } from 'fs';
+import os from 'os';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { ListToolsRequestSchema, CallToolRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
 var __defProp = Object.defineProperty;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
-  if (typeof require !== "undefined") return require.apply(this, arguments);
-  throw Error('Dynamic require of "' + x + '" is not supported');
-});
 var __esm = (fn, res) => function __init() {
   return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
 };
@@ -16560,10 +16555,10 @@ var init_logger = __esm({
         switch (entry.level) {
           case 0 /* DEBUG */:
           case 1 /* INFO */:
-            console.log(message);
+            console.error(message);
             break;
           case 2 /* WARN */:
-            console.warn(message);
+            console.error(message);
             break;
           case 3 /* ERROR */:
             console.error(message);
@@ -17941,7 +17936,7 @@ function getSharedLockDir(filePath) {
 function createLockInfo(type) {
   return {
     pid: process.pid,
-    hostname: __require("os").hostname(),
+    hostname: os.hostname(),
     timestamp: Date.now(),
     type,
     instanceId: INSTANCE_ID

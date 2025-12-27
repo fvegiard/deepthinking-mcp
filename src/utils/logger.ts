@@ -111,10 +111,10 @@ export class Logger implements ILogger {
     switch (entry.level) {
       case LogLevel.DEBUG:
       case LogLevel.INFO:
-        console.log(message);
+        console.error(message);
         break;
       case LogLevel.WARN:
-        console.warn(message);
+        console.error(message);
         break;
       case LogLevel.ERROR:
         console.error(message);
