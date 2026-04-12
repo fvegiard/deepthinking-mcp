@@ -1,0 +1,165 @@
+# Knowledge Pack: metareasoning
+
+**Mode**: `metareasoning`
+**Category skill**: `think-analytical`
+**Source doc**: `docs/modes/METAREASONING.md`
+
+## Overview
+
+Meta-reasoning provides **strategic oversight** of your reasoning process. Unlike other modes that focus on solving problems directly, meta-reasoning monitors and evaluates **how** you're thinking, recommending when to switch strategies, assessing quality, and managing cognitive resources.
+
+Think of it as the "executive function" of your reasoning system - it doesn't do the math or build the arguments, but it decides *which* mode to use, *when* to switch, and *whether* you're making progress.
+
+## When to Use
+
+Use meta-reasoning when you need to:
+
+- **Evaluate current strategy effectiveness** - "Is my current approach working?"
+- **Decide when to switch modes** - "Should I try a different reasoning method?"
+- **Monitor reasoning quality** - "Is my thinking logically sound and well-evidenced?"
+- **Allocate cognitive resources** - "How many more thoughts should I spend on this?"
+- **Assess uncertainty and confidence** - "How sure am I about this conclusion?"
+- **Get unstuck** - "I'm not making progress - what should I try instead?"
+
+## Core Concepts
+
+(no 'core concepts' section in source doc)
+
+## Thought Type (TypeScript Interface)
+
+```typescript
+interface MetaReasoningThought extends BaseThought {
+mode: ThinkingMode.METAREASONING;
+
+  // Core meta-reasoning fields
+  currentStrategy: CurrentStrategy;
+  strategyEvaluation: StrategyEvaluation;
+  alternativeStrategies: AlternativeStrategy[];
+  recommendation: StrategyRecommendation;
+
+  // Monitoring and assessment fields
+  resourceAllocation: ResourceAllocation;
+  qualityMetrics: QualityMetrics;
+  sessionContext: SessionContext;
+}
+```
+
+## Supporting Interfaces
+
+```typescript
+interface CurrentStrategy {
+mode: ThinkingMode;
+  approach: string;
+  startedAt: Date;
+  thoughtsSpent: number;
+  progressIndicators: string[];
+}
+
+interface StrategyEvaluation {
+effectiveness: number; // 0-1 scale
+  efficiency: number; // 0-1 scale
+  confidence: number; // 0-1 scale
+  progressRate: number; // insights per thought
+  qualityScore: number; // overall quality 0-1
+  issues: string[]; // problems identified
+  strengths: string[]; // what's working well
+}
+
+interface AlternativeStrategy {
+mode: ThinkingMode;
+  reasoning: string;
+  expectedBenefit: string;
+  switchingCost: number; // 0-1, effort to switch
+  recommendationScore: number; // 0-1
+}
+
+interface StrategyRecommendation {
+action: MetaAction;
+  targetMode?: ThinkingMode;
+  justification: string;
+  confidence: number;
+  expectedImprovement: string;
+}
+
+interface ResourceAllocation {
+timeSpent: number; // milliseconds
+  thoughtsRemaining: number; // estimated
+  complexityLevel: 'low' | 'medium' | 'high';
+  urgency: 'low' | 'medium' | 'high';
+  recommendation: string; // how to allocate cognitive effort
+}
+
+interface QualityMetrics {
+logicalConsistency: number; // 0-1
+  evidenceQuality: number; // 0-1
+  completeness: number; // 0-1
+  originality: number; // 0-1
+  clarity: number; // 0-1
+  overallQuality: number; // 0-1
+}
+
+interface SessionContext {
+sessionId: string;
+  totalThoughts: number;
+  modesUsed: ThinkingMode[];
+  modeSwitches: number;
+  problemType: string;
+  historicalEffectiveness?: number; // from past similar sessions
+}
+
+```
+
+## Worked Example (from source doc)
+
+```typescript
+// Using meta-reasoning through deepthinking_analytical tool
+const response = await deepthinking_analytical({
+  mode: 'metareasoning',
+  thought: 'Evaluating current problem-solving approach for effectiveness',
+  thoughtNumber: 5,
+  totalThoughts: 10,
+  nextThoughtNeeded: true,
+
+  // Current strategy being evaluated
+  currentStrategy: {
+    mode: ThinkingMode.INDUCTIVE,
+    approach: 'Building generalizations from observed patterns',
+    startedAt: new Date(),
+    thoughtsSpent: 4,
+    progressIndicators: ['Found 3 patterns', 'Identified 2 exceptions']
+  },
+
+  // Evaluation of current strategy
+  strategyEvaluation: {
+    effectiveness: 0.65,  // Moderate progress per thought
+    efficiency: 0.55,     // Somewhat slow
+    confidence: 0.75,     // Fairly confident, few issues
+    progressRate: 0.65,   // Decent insight rate
+    qualityScore: 0.65,   // Overall moderate quality
+    issues: ['Limited sample size', 'Potential selection bias'],
+    strengths: ['Clear patterns emerging', 'Rigorous data collection']
+  },
+
+  // Recommended action
+  recommendation: {
+    action: 'REFINE',
+    justification: 'Making progress but efficiency is low - consider more systematic sampling',
+    confidence: 0.70,
+    expectedImprovement: 'Faster pattern recognition with better data coverage'
+  },
+
+  // Quality assessment
+  qualityMetrics: {
+    logicalConsistency: 0.80,
+    evidenceQuality: 0.70,
+    completeness: 0.60,
+    originality: 0.65,
+    clarity: 0.75,
+    overallQuality: 0.70
+  }
+});
+```
+
+---
+
+*Generated by RLM extraction pass on 2026-04-12*

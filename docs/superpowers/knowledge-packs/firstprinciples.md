@@ -1,0 +1,160 @@
+# Knowledge Pack: firstprinciples
+
+**Mode**: `firstprinciples`
+**Category skill**: `think-analytical`
+**Source doc**: `docs/modes/FIRSTPRINCIPLES.md`
+
+## Overview
+
+First Principles mode provides **foundational reasoning** by building understanding from basic axioms, definitions, and observations. It enables reasoning from the ground up, questioning assumptions and deriving conclusions through explicit logical steps.
+
+This mode captures the structure of first-principles thinking - from identifying foundational truths through derivation chains to conclusions.
+
+## When to Use
+
+Use first principles mode when you need to:
+
+- **Question assumptions** - Challenge what's taken for granted
+- **Build from fundamentals** - Start from basic truths
+- **Derive conclusions rigorously** - Explicit logical steps
+- **Understand deeply** - Not just accept, but know why
+- **Innovate** - Find non-obvious solutions
+
+## Core Concepts
+
+(no 'core concepts' section in source doc)
+
+## Thought Type (TypeScript Interface)
+
+```typescript
+interface FirstPrinciplesThought extends BaseThought {
+mode: ThinkingMode.FIRSTPRINCIPLES;
+  question: string;
+  principles: FoundationalPrinciple[];
+  derivationSteps: DerivationStep[];
+  conclusion: Conclusion;
+  alternativeInterpretations?: string[];
+}
+```
+
+## Supporting Interfaces
+
+```typescript
+interface FoundationalPrinciple {
+id: string;
+  type: PrincipleType;
+  statement: string;
+  justification: string;
+  dependsOn?: string[]; // IDs of other principles this depends on
+  confidence?: number; // 0-1, for observations and assumptions
+  latex?: string; // LaTeX representation for mathematical principles
+}
+
+interface DerivationStep {
+stepNumber: number;
+  principle: string; // ID of the principle being applied
+  inference: string; // What is inferred from this principle
+  logicalForm?: string; // Formal logic representation (e.g., "A → B, A ∴ B")
+  confidence: number; // 0-1, confidence in this step
+  latex?: string; // LaTeX representation for mathematical derivations
+}
+
+interface Conclusion {
+statement: string;
+  derivationChain: number[]; // Array of step numbers leading to conclusion
+  certainty: number; // 0-1, overall certainty level
+  limitations?: string[]; // Known limitations or assumptions
+  latex?: string; // LaTeX representation for mathematical conclusions
+}
+
+```
+
+## Worked Example (from source doc)
+
+```typescript
+// Ask the fundamental question
+const question = await deepthinking_analytical({
+  mode: 'firstprinciples',
+  thought: 'Why do we need a database for this application?',
+  thoughtNumber: 1,
+  totalThoughts: 5,
+  nextThoughtNeeded: true,
+
+  question: 'What are the fundamental data storage requirements for this application?',
+  principles: [],
+  derivationSteps: [],
+  conclusion: { statement: '', derivationChain: [], certainty: 0 }
+});
+
+// Identify foundational principles
+const principles = await deepthinking_analytical({
+  mode: 'firstprinciples',
+  thought: 'Establish the foundational principles',
+  thoughtNumber: 2,
+  totalThoughts: 5,
+  nextThoughtNeeded: true,
+
+  question: 'What are the fundamental data storage requirements?',
+  principles: [
+    {
+      id: 'p1',
+      type: 'axiom',
+      statement: 'Data must persist beyond application runtime',
+      justification: 'Users expect their data to be available across sessions'
+    },
+    {
+      id: 'p2',
+      type: 'observation',
+      statement: 'Application handles ~1000 concurrent users at peak',
+      justification: 'Based on current traffic metrics',
+      confidence: 0.9
+    },
+    {
+      id: 'p3',
+      type: 'observation',
+      statement: 'Data is read 100x more often than written',
+      justification: 'Based on application analytics',
+      confidence: 0.85
+    },
+    {
+      id: 'p4',
+      type: 'definition',
+      statement: 'ACID transactions are not required for this data',
+      justification: 'Data is eventually consistent by business requirement'
+    },
+    {
+      id: 'p5',
+      type: 'assumption',
+      statement: 'Data schema may evolve significantly over time',
+      justification: 'Product is in early stage, requirements will change',
+      confidence: 0.8
+    }
+  ],
+  derivationSteps: [],
+  conclusion: { statement: '', derivationChain: [], certainty: 0 }
+});
+
+// Derive from principles
+const derivation = await deepthinking_analytical({
+  mode: 'firstprinciples',
+  thought: 'Derive storage requirements from principles',
+  thoughtNumber: 3,
+  totalThoughts: 5,
+  nextThoughtNeeded: true,
+
+  question: 'What storage solution fits our fundamental needs?',
+  principles: [ /* same as above */ ],
+  derivationSteps: [
+    {
+      stepNumber: 1,
+      principle: 'p1',
+      inference: 'We need persistent storage of some kind (file, database, or cloud)',
+      confidence: 1.0,
+      logicalForm: 'Persistence required → Storage mechanism needed'
+    },
+    {
+      stepNumber:
+
+---
+
+*Generated by RLM extraction pass on 2026-04-12*
